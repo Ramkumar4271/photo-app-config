@@ -1,0 +1,32 @@
+server:
+  port: '8010'
+  
+eureka:
+  client:
+    fetchRegistry: 'false'
+    registerWithEureka: 'false'
+
+spring:
+  security:
+    user:
+      name: test
+      password: '{cipher}a3060813898cae02ba56fb5cfaa4be317dc1ff010e0d46f4f017797f358be1cd'
+
+## Configuring info endpoint
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  info:
+    defaults:
+      enabled: true
+    env:
+      enabled: true
+      
+info:
+  application:
+    author: Ramkumar R
+    version: 1.0.0
+    name: 'PhotoServiceDiscovery'
+    description: 'Service Discovery Micorservice of Photo App.'

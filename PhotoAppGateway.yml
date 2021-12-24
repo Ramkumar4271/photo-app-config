@@ -1,0 +1,66 @@
+server:
+  port: '8020'
+
+eureka:
+  client:
+    fetchRegistry: 'true'
+    registerWithEureka: 'true'
+
+# management:
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, refresh
+  info:
+    defaults:
+      enabled: true
+    env:
+      enabled: true
+      
+info:
+  application:
+    author: Ramkumar R
+    version: 1.0.0
+    name: 'PhotoGatewayAPI'
+    description: 'Gateway API Micorservice of Photo App.'
+  
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+#          enabled: true
+          lowerCaseServiceId: true
+      routes:
+      - id: 'auth-api'
+        uri: 'lb://PHOTOAPPAUTHAPI'
+        predicates:
+        - Path=/photo/auth/**
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/photo/auth/(?<segment>.*), /$\{segment}
+      - id: 'auth-api-info'
+        uri: 'lb://PHOTOAPPAUTHAPI'
+        predicates:
+        - Path=/photo/auth/actuator/**
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/photo/auth/(?<segment>.*), /$\{segment}
+      - id: 'accounts-api'
+        uri: 'lb://PHOTOAPPACCOUNTSAPI'
+        predicates:
+        - Path=/photo/accounts/**
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/photo/accounts/(?<segment>.*), /$\{segment}
+        - AuthFilterFactory
+      - id: 'accounts-api-info'
+        uri: 'lb://PHOTOAPPACCOUNTSAPI'
+        predicates:
+        - Path=/photo/accounts/actuator/**
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/photo/accounts/(?<segment>.*), /$\{segment}
+  
+  

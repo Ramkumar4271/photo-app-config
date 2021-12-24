@@ -1,0 +1,33 @@
+############ sleuth  zipkin ##############
+# spring:     
+#   sleuth:
+#     sampler:
+#       percentage: '0.1'
+#   zipkin:
+#     baseUrl: http://localhost:9411/ 
+
+############ eureka ##############
+eureka:
+  client:
+    fetchRegistry: 'true'
+    registerWithEureka: 'true'
+
+## Configuring info endpoint
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  info:
+    defaults:
+      enabled: true
+    env:
+      enabled: true
+      
+info:
+  application:
+    author: Ramkumar R
+    version: 1.0.0
+    name: 'PhotoAppUsersApi'
+    description: 'Users Micorservice of Photo App.'
+    

@@ -1,0 +1,43 @@
+############ PORT No. ############
+server:
+  port: '0'
+
+############ DB Properties ##############
+spring:
+  sleuth:
+    sampler:
+      percentage: '0.1'
+  zipkin:
+    baseUrl: http://localhost:9411/
+  datasource:
+    hikari:
+        initialization-fail-timeout: 0
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/photo?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true
+    username: root
+    password: '{cipher}6d91b225b55ee02c452d060e4d25a75ed9467e0d54d57be0373364a01f5539a3'
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+        ddl-auto: update
+
+############ Secret Key ##############
+application:
+  jwtSecret: '{cipher}126a2a19abafd7e869f1b46dea18bb977d77b6ae33d05b1c1bb8114deb84460b'
+  jwtExpirationMs: 180000   
+
+############ Service Discovery IP ##############
+servicdiscovery_password: '{cipher}a3060813898cae02ba56fb5cfaa4be317dc1ff010e0d46f4f017797f358be1cd'
+
+eureka:
+  instance:
+    preferIpAddress: 'true'
+  client:
+    serviceUrl:
+      defaultZone: 'http://test:${servicdiscovery_password}@localhost:8010/eureka/' 
+
+############ Gateway API IP ##############
+gateway:
+  ip: '192.168.0.10'  
